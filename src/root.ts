@@ -2,8 +2,6 @@ import { Scene, Game, AUTO } from 'phaser';
 
 import { i18n } from 'src/libs/i18n';
 
-import './default.scss';
-
 class Example extends Scene {
   preload() {
     this.load.setBaseURL('https://labs.phaser.io');

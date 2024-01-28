@@ -1,6 +1,5 @@
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 
 import { existsSync } from 'fs';
@@ -110,14 +109,6 @@ export default {
       : false,
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: isDevelopment
-        ? 'css/[name].css'
-        : 'css/[name].[contenthash].css',
-      chunkFilename: isDevelopment
-        ? 'css/[name].css'
-        : 'css/[name].[contenthash].css',
-    }),
     new HtmlWebpackPlugin({
       template: 'index.ejs',
     }),
@@ -149,58 +140,6 @@ export default {
         resolve: {
           fullySpecified: false,
         },
-      },
-      {
-        test: /\.(scss|sass|css)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: isDevelopment,
-              modules: {
-                auto: (resourcePath) => !resourcePath.endsWith('.css'),
-                localIdentName: isDevelopment
-                  ? '[local]_[hash:base64:5]'
-                  : '[hash:base64:5]',
-                exportOnlyLocals: false,
-                exportLocalsConvention: 'camelCaseOnly',
-              },
-              importLoaders: 2,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: isDevelopment,
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sassOptions: {
-                outputStyle: 'compressed',
-                includePaths: [resolve(__dirname, './src/helpers/styles')],
-              },
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        issuer: /\.(ts|js)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              fallback: 'file-loader',
-              limit: 8192,
-              emitFile: true,
-              name: isDevelopment ? '[name].[ext]' : '[name].[hash:8].[ext]',
-              outputPath: 'assets',
-            },
-          },
-        ],
       },
     ],
   },

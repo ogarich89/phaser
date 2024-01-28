@@ -12,8 +12,9 @@
     "allowJs": true,
     "noEmit": true,
     "experimentalDecorators": true,
-    "types": ["jest"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["es6", "dom", "dom.iterable"],
+    "types": ["Phaser", "jest"]
   },
   "exclude": [
     "**/*.test.ts"
